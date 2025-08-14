@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style type="text/tailwindcss">
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827;color: #E5E7EB;
+        }
+        .sidebar {
+            background-color: #1F2937;
+        }
+        .main-content {
+            background-color: #111827;
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-radius: 0.375rem;
+            transition: background-color 0.2s ease-in-out;
+            color: #D1D5DB;
+        }
+        .nav-item:hover, .nav-item.active {
+            background-color: #374151;color: #FFFFFF;
+        }
+        .nav-item .material-icons {
+            margin-right: 1rem;
+            font-size: 1.25rem;
+        }
+        .table-container {
+            background-color: #1F2937;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+        }
+        .details-row {
+            display: none;
+        }
+        .details-row.open {
+            display: table-row;
+        }
+        .json-editor {
+            background-color: #374151;
+            border-radius: 0.375rem;
+            padding: 1rem;
+            font-family: monospace;
+            white-space: pre;
+        }
+        .tooltip {
+            @apply invisible absolute;
+        }
+        .has-tooltip:hover .tooltip {
+            @apply visible z-50;
+        }
+    </style>
+</head>
+<body class="flex h-screen">
+<aside class="w-64 sidebar flex-shrink-0 flex flex-col justify-between">
+<div>
+<div class="p-4 flex items-center justify-between">
+<div class="flex items-center">
+<span class="material-icons text-white text-3xl">arrow_drop_down</span>
+<span class="text-xl font-bold ml-2 text-white">Down</span>
+</div>
+<span class="material-icons text-gray-400">chevron_left</span>
+</div>
+<nav class="mt-4 px-2">
+<a class="nav-item" href="#">
+<span class="material-icons">person_outline</span>
+<span>Users</span>
+</a>
+<div class="mt-4">
+<h3 class="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Ops</h3>
+<div class="mt-2 space-y-1">
+<a class="nav-item" href="#">
+<span class="material-icons">hub</span>
+<span>Central Hub (Beta)</span>
+</a>
+<a class="nav-item" href="#">
+<span class="material-icons">shield</span>
+<span>Scammers Activity</span>
+</a>
+<a class="nav-item" href="#">
+<span class="material-icons">flag</span>
+<span>Reports</span>
+</a>
+<a class="nav-item" href="#">
+<span class="material-icons">person_add</span>
+<span>New female</span>
+</a>
+<a class="nav-item" href="#">
+<span class="material-icons">snooze</span>
+<span>Snooze</span>
+</a>
+<a class="nav-item" href="#">
+<span class="material-icons">label</span>
+<span>Tags</span>
+</a>
+<a class="nav-item" href="#">
+<span class="material-icons">admin_panel_settings</span>
+<span>Admin tag audit</span>
+</a>
+<a class="nav-item" href="#">
+<span class="material-icons">rate_review</span>
+<span>System tag review</span>
+</a>
+<a class="nav-item" href="#">
+<span class="material-icons">block</span>
+<span>Blocked About Mes</span>
+</a>
+<a class="nav-item flex justify-between" href="#">
+<div>
+<span class="material-icons">verified_user</span>
+<span>Photo verification</span>
+</div>
+<span class="bg-red-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">1</span>
+</a>
+<a class="nav-item" href="#">
+<span class="material-icons">mood_bad</span>
+<span>Bad actor damage</span>
+</a>
+</div>
+</div>
+<div class="mt-4">
+<h3 class="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Testing</h3>
+<div class="mt-2 space-y-1">
+<a class="nav-item active" href="#">
+<span class="material-icons">science</span>
+<span>Test Users</span>
+</a>
+</div>
+</div>
+<div class="mt-4">
+<h3 class="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Others</h3>
+<a class="nav-item" href="#">
+<span class="material-icons">more_horiz</span>
+<span>Others</span>
+</a>
+</div>
+</nav>
+</div>
+<div class="p-4 border-t border-gray-700">
+<div class="flex items-center">
+<img alt="user avatar" class="w-8 h-8 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkZxKzEmgNht7DKmEyko2iMB0TV_EWfMnjYn6c2tJ9kEMtrn3ozYWPWHXjSreUTdNvXkk_T1tIOs55TgwnsJ3kgVfRQFdnwxUp3Xnn_WGtxjaAXLB6NLBhKojMPOwYioSWVuuDaQVh3q0YMEra0AegWDsA1fZk6dOT8Q13ByOPEJH6aydjWZLcfDN42ptiphy30ungXxImRZBJhHYcPlE9zFBLUCXDHSIDMq78TXQ88QdWxpqJIZDPOl_BTDu0pPASVHxLc7H7Da2o"/>
+<div class="ml-3">
+<p class="text-sm font-medium text-white">dmytro@downapp.com</p>
+<a class="text-xs text-gray-400 hover:text-white" href="#">LOGOUT</a>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 p-6 overflow-y-auto">
+<div class="flex justify-between items-center mb-6">
+<h1 class="text-2xl font-bold text-white">Test Users</h1>
+<button class="bg-blue-600 hover:bg-blue-700 text-white font-bold p-3 rounded-full flex items-center justify-center">
+<span class="material-icons">add</span>
+</button>
+</div>
+<div class="table-container">
+<table class="w-full text-left">
+<thead class="border-b border-gray-600">
+<tr>
+<th class="p-4">User</th>
+<th class="p-4">ID</th>
+<th class="p-4">Gender</th>
+<th class="p-4">Actions</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-gray-700">
+<td class="p-4">
+<div class="flex items-center">
+<img alt="user avatar" class="w-10 h-10 rounded-full mr-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWspFfru-Vl9PzONvmaDTM6kwi9DjOZyhST_MzApOeGbXO90psWi4R4Fm3qsIUpFtP1aRFcyShFbRvLc-2dyyDEUjvqGKAJabhuqADyIa6X7HwqEwjrkwLwkaM10hhEUDyEqphPjenYDvmqJpjP36ox4ZX2sEmsOPqWsdJqtC5Y42Xh023b_1C5lEVhgtuHk9s3FzPGhi0icr2nB_v7vca5om2aQsZnmf2B_YTAx8tEC5lyZ69PX5J0EPbqfxoq7daH3ZSATxP8gXi"/>
+<span>Alice Johnson</span>
+</div>
+</td>
+<td class="p-4">usr_12345abcde</td>
+<td class="p-4">Female</td>
+<td class="p-4">
+<div class="flex items-center space-x-4">
+<div class="relative has-tooltip">
+<button class="text-green-500 hover:text-green-400">
+<span class="material-icons">phone_iphone</span>
+</button>
+<div class="tooltip bottom-full mb-2 w-48 bg-gray-900 text-white text-xs rounded-lg py-2 px-3">
+<p class="font-bold">Phone: +1-555-1234</p>
+<p>PIN: 123456</p>
+<div class="absolute text-gray-900 w-2 h-2 -bottom-1 left-1/2 transform -translate-x-1/2 rotate-45 bg-gray-900"></div>
+</div>
+</div>
+<button class="text-red-500 hover:text-red-400">
+<span class="material-icons">delete</span>
+</button>
+<button class="text-gray-400 hover:text-white details-toggle">
+<span>Details</span>
+<span class="material-icons align-middle">expand_more</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="details-row bg-gray-800">
+<td class="p-0" colspan="4">
+<div class="p-4">
+<div class="json-editor">
+<pre><code class="language-json">{
+    "geo_lat": 34.0522,
+    "geo_long": -118.2437,
+    "about_me": "Lover of hiking, coffee, and good books. Looking for someone to share adventures with.",
+    "threesome": true
+}</code></pre>
+</div>
+</div>
+</td>
+</tr>
+<tr class="border-b border-gray-700">
+<td class="p-4">
+<div class="flex items-center">
+<img alt="user avatar" class="w-10 h-10 rounded-full mr-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_iVwtke09zW6eF95ZEfdLatTARcgnqlYhfVDQE8h4AtxbN5GR5_x1HhAPSPJMbX8aKeSxlUo6YTLixr3dU7Ctp_vH1sTi0PBYv7jCh_VMoKr8yjWunMlqGVmUhcfe_BDL_Bf03utq_F2XBXsxbNewEaFGgbaM4KCCzxRmaBbAkRm-JuK6Zt8qt9OcNmyUWJkAoBf5jPKarWiAQCpPpn3wdpssMSdc60dn03-iF2E_FBNJtKuTRrJExxQSb03An4yofBY98JEZezK3"/>
+<span>Bob Williams</span>
+</div>
+</td>
+<td class="p-4">usr_67890fghij</td>
+<td class="p-4">Male</td>
+<td class="p-4">
+<div class="flex items-center space-x-4">
+<button class="text-gray-400 hover:text-white">
+<span class="material-icons">phone_iphone</span>
+</button>
+<button class="text-red-500 hover:text-red-400">
+<span class="material-icons">delete</span>
+</button>
+<button class="text-gray-400 hover:text-white details-toggle">
+<span>Details</span>
+<span class="material-icons align-middle">expand_less</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="details-row open bg-gray-800">
+<td class="p-0" colspan="4">
+<div class="p-4">
+<div class="json-editor">
+<pre><code class="language-json">{
+    "user_id": "usr_67890fghij",
+    "name": "Bob Williams",
+    "gender": "Male",
+    "geo_lat": 40.7128,
+    "geo_long": -74.0060,
+    "about_me": "Just a city boy, born and raised in South Detroit. I took the midnight train goin' anywhere.",
+    "threesome": false,
+    "created_at": "2023-10-27T10:00:00Z"
+}</code></pre>
+</div>
+</div>
+</td>
+</tr>
+<tr class="border-b border-gray-700">
+<td class="p-4">
+<div class="flex items-center">
+<img alt="user avatar" class="w-10 h-10 rounded-full mr-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqvk56X9wm0pR-nA-WXBYYRv7F3qYSXZgzeYsVck4LV2ti7uT8CSfV7-WRrGCEbtFyzbuMqxJjLirtG6UFpiwnCJZiEPwGap7MliKRQYi29uvCFNXDqpzZCdXoEG3lOVA8cS7uiQSlJ71zp61ru7Bfe7-BXgxmPX9CDIE1EcBX1jOqoPEf0brGeTdWN4ox8UfeWr9w_BlHIty1N1_VSAO0Px4T5FCmYijzz1Jln_eMYDS1ppkVOS8Wrt1HAAYAPtJ2HuZQ72k9Jz8D"/>
+<span>Charlie Brown</span>
+</div>
+</td>
+<td class="p-4">usr_klmno12345</td>
+<td class="p-4">Male</td>
+<td class="p-4">
+<div class="flex items-center space-x-4">
+<button class="text-gray-400 hover:text-white">
+<span class="material-icons">phone_iphone</span>
+</button>
+<button class="text-red-500 hover:text-red-400">
+<span class="material-icons">delete</span>
+</button>
+<button class="text-gray-400 hover:text-white details-toggle">
+<span>Details</span>
+<span class="material-icons align-middle">expand_more</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="details-row bg-gray-800">
+<td class="p-0" colspan="4">
+<div class="p-4">
+<div class="json-editor">
+<pre><code class="language-json">{
+    "geo_lat": 41.8781,
+    "geo_long": -87.6298,
+    "about_me": "Good grief! I'm just trying to kick a football.",
+    "threesome": false
+}</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</main>
+<script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const detailToggles = document.querySelectorAll('.details-toggle');
+            detailToggles.forEach(toggle => {
+                toggle.addEventListener('click', function () {
+                    const detailsRow = this.closest('tr').nextElementSibling;
+                    const icon = this.querySelector('.material-icons.align-middle');
+                    if (detailsRow.classList.contains('open')) {
+                        detailsRow.classList.remove('open');
+                        icon.textContent = 'expand_more';
+                    } else {
+                        // Close other open rows
+                        const openRows = document.querySelectorAll('.details-row.open');
+                        openRows.forEach(row => {
+                           row.classList.remove('open');
+                           const openToggle = row.previousElementSibling.querySelector('.details-toggle .material-icons.align-middle');
+                           if(openToggle) {
+                               openToggle.textContent = 'expand_more';
+                           }
+                        });
+                        detailsRow.classList.add('open');
+                        icon.textContent = 'expand_less';
+                    }
+                });
+            });
+        });
+    </script>
+
+</body></html>
