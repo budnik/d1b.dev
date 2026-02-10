@@ -4,12 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dmytro Budnyk - Software Developer</title>
-    <meta name="description" content="Software Developer specializing in Ruby, Rails, React, and Elasticsearch">
+    <meta name="description" content="Software Developer specializing in LLMs, Ruby, Rails, React, and Elasticsearch">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Light Theme (Default) */
         :root {
+            --primary: #ffffff;
+            --secondary: #f8fafc;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --card-bg: #ffffff;
+            --card-border: #e2e8f0;
+            --gradient-1: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            --gradient-2: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            --bg-subtle: #f1f5f9;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        /* Dark Theme */
+        [data-theme="dark"] {
             --primary: #0a0a0a;
             --secondary: #1a1a1a;
             --accent: #3b82f6;
@@ -21,6 +39,42 @@
             --card-border: rgba(255, 255, 255, 0.1);
             --gradient-1: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
             --gradient-2: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            --bg-subtle: rgba(255, 255, 255, 0.05);
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Warm Theme */
+        [data-theme="warm"] {
+            --primary: #faf5f0;
+            --secondary: #f5efe6;
+            --accent: #d97706;
+            --accent-hover: #b45309;
+            --text: #1c1917;
+            --text-muted: #78716c;
+            --border: #e7e5e4;
+            --card-bg: #ffffff;
+            --card-border: #e7e5e4;
+            --gradient-1: linear-gradient(135deg, #d97706 0%, #dc2626 100%);
+            --gradient-2: linear-gradient(135deg, #ea580c 0%, #d97706 100%);
+            --bg-subtle: #f5efe6;
+            --shadow: rgba(120, 113, 108, 0.15);
+        }
+
+        /* Ocean Theme */
+        [data-theme="ocean"] {
+            --primary: #f0f9ff;
+            --secondary: #e0f2fe;
+            --accent: #0ea5e9;
+            --accent-hover: #0284c7;
+            --text: #0c4a6e;
+            --text-muted: #0369a1;
+            --border: #bae6fd;
+            --card-bg: #ffffff;
+            --card-border: #bae6fd;
+            --gradient-1: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+            --gradient-2: linear-gradient(135deg, #06b6d4 0%, #0ea5e9 100%);
+            --bg-subtle: #e0f2fe;
+            --shadow: rgba(14, 165, 233, 0.15);
         }
 
         * {
@@ -35,6 +89,7 @@
             background: var(--primary);
             color: var(--text);
             overflow-x: hidden;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
         body::before {
@@ -45,10 +100,57 @@
             right: 0;
             bottom: 0;
             background:
-                radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.08) 0%, transparent 50%);
+                radial-gradient(circle at 20% 50%, var(--accent-opacity, rgba(59, 130, 246, 0.05)) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, var(--accent2-opacity, rgba(139, 92, 246, 0.05)) 0%, transparent 50%);
             pointer-events: none;
             z-index: 0;
+        }
+
+        /* Theme Switcher */
+        .theme-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 12px;
+            box-shadow: 0 4px 20px var(--shadow);
+            backdrop-filter: blur(10px);
+        }
+
+        .theme-switcher label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .theme-switcher select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--secondary);
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .theme-switcher select:hover {
+            border-color: var(--accent);
+        }
+
+        .theme-switcher select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
         .container {
@@ -94,6 +196,17 @@
             font-weight: 300;
         }
 
+        .llm-badge {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 16px;
+            background: var(--gradient-1);
+            color: white;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
         /* Social Links */
         .social-links {
             display: flex;
@@ -119,10 +232,10 @@
         }
 
         .social-btn:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.2);
+            background: var(--bg-subtle);
+            border-color: var(--accent);
             transform: translateY(-2px);
-            box-shadow: 0 10px 40px rgba(59, 130, 246, 0.2);
+            box-shadow: 0 10px 40px var(--shadow);
         }
 
         .social-btn svg {
@@ -156,12 +269,12 @@
             padding: 24px;
             border-radius: 16px;
             transition: all 0.3s ease;
+            box-shadow: 0 2px 10px var(--shadow);
         }
 
         .contact-card:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.15);
             transform: translateY(-3px);
+            box-shadow: 0 8px 30px var(--shadow);
         }
 
         .contact-label {
@@ -226,12 +339,19 @@
             font-size: 0.95rem;
             font-weight: 500;
             transition: all 0.3s ease;
+            box-shadow: 0 2px 8px var(--shadow);
         }
 
         .skill-tag:hover {
-            background: rgba(59, 130, 246, 0.15);
+            background: var(--bg-subtle);
             border-color: var(--accent);
             transform: translateY(-2px);
+        }
+
+        .skill-tag.llm {
+            background: var(--gradient-1);
+            color: white;
+            border-color: transparent;
         }
 
         /* Experience */
@@ -247,12 +367,29 @@
             padding: 30px;
             border-radius: 16px;
             transition: all 0.3s ease;
+            box-shadow: 0 2px 10px var(--shadow);
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 20px;
         }
 
         .job-card:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.15);
             transform: translateX(5px);
+            box-shadow: 0 8px 30px var(--shadow);
+        }
+
+        .company-logo {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            border-radius: 8px;
+            padding: 8px;
+            background: var(--secondary);
+            border: 1px solid var(--border);
+        }
+
+        .job-content {
+            flex: 1;
         }
 
         .job-header {
@@ -332,14 +469,41 @@
             .job-header {
                 flex-direction: column;
             }
+
+            .job-card {
+                grid-template-columns: 1fr;
+            }
+
+            .company-logo {
+                width: 48px;
+                height: 48px;
+            }
+
+            .theme-switcher {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Theme Switcher -->
+    <div class="theme-switcher">
+        <label for="theme-select">Color Theme</label>
+        <select id="theme-select" onchange="changeTheme(this.value)">
+            <option value="light">☀️ Light</option>
+            <option value="dark">🌙 Dark</option>
+            <option value="warm">🔥 Warm</option>
+            <option value="ocean">🌊 Ocean</option>
+        </select>
+    </div>
+
     <div class="container">
         <header>
             <h1>Dmytro Budnyk</h1>
-            <p class="subtitle">Software Developer</p>
+            <p class="subtitle">Software Developer & LLM Engineer</p>
+            <div class="llm-badge">🤖 Focused on LLM Applications & AI Integration</div>
 
             <div class="social-links">
                 <a href="https://x.com/d1b" target="_blank" rel="noopener" class="social-btn">
@@ -378,21 +542,26 @@
             </div>
             <div class="contact-card">
                 <div class="contact-label">Location</div>
-                <div class="contact-value">Available for remote opportunities</div>
+                <div class="contact-value">Amsterdam, Netherlands · Remote</div>
             </div>
         </section>
 
         <section class="skills">
-            <h2>Top Skills</h2>
+            <h2>Technical Skills</h2>
             <div class="skills-grid">
+                <span class="skill-tag llm">🤖 LLM Integration</span>
+                <span class="skill-tag llm">🧠 RAG Architectures</span>
+                <span class="skill-tag llm">⚡ LangChain</span>
+                <span class="skill-tag llm">🔗 OpenAI API</span>
                 <span class="skill-tag">Ruby</span>
                 <span class="skill-tag">Ruby on Rails</span>
                 <span class="skill-tag">Elasticsearch</span>
                 <span class="skill-tag">React</span>
-                <span class="skill-tag">Redux</span>
+                <span class="skill-tag">TypeScript</span>
+                <span class="skill-tag">Python</span>
                 <span class="skill-tag">PostgreSQL</span>
-                <span class="skill-tag">JavaScript</span>
-                <span class="skill-tag">API Development</span>
+                <span class="skill-tag">Vector DBs</span>
+                <span class="skill-tag">API Design</span>
             </div>
         </section>
 
@@ -400,93 +569,129 @@
             <h2>Experience</h2>
 
             <div class="job-card">
-                <div class="job-header">
-                    <div>
-                        <div class="job-title">Software Engineer</div>
-                        <div class="company">Chattermill</div>
+                <img src="https://logo.clearbit.com/chattermill.com" alt="Chattermill" class="company-logo" onerror="this.style.display='none'">
+                <div class="job-content">
+                    <div class="job-header">
+                        <div>
+                            <div class="job-title">Software Engineer</div>
+                            <div class="company">Chattermill</div>
+                        </div>
+                        <div class="job-duration">September 2021 - December 2023 · 2 yrs 4 mos</div>
                     </div>
-                    <div class="job-duration">September 2021 - December 2023 · 2 yrs 4 mos</div>
-                </div>
-                <div class="job-description">
-                    <ul>
-                        <li>Developed and maintained features for a leading cloud-based communication platform used by enterprise clients</li>
-                        <li>Collaborated with product and design teams to translate user stories into high-quality code</li>
-                        <li>Optimized backend processes using Ruby on Rails for improved scalability and efficiency</li>
-                    </ul>
+                    <div class="job-description">
+                        <ul>
+                            <li>Built and maintained LLM-powered customer experience analytics platform</li>
+                            <li>Integrated OpenAI GPT models for sentiment analysis and insight extraction</li>
+                            <li>Developed RAG (Retrieval-Augmented Generation) pipelines for knowledge management</li>
+                            <li>Optimized backend processes using Ruby on Rails for improved scalability</li>
+                            <li>Collaborated with product and design teams to translate user stories into production code</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
             <div class="job-card">
-                <div class="job-header">
-                    <div>
-                        <div class="job-title">Software Engineer</div>
-                        <div class="company">Catawiki</div>
+                <img src="https://logo.clearbit.com/catawiki.com" alt="Catawiki" class="company-logo" onerror="this.style.display='none'">
+                <div class="job-content">
+                    <div class="job-header">
+                        <div>
+                            <div class="job-title">Software Engineer</div>
+                            <div class="company">Catawiki</div>
+                        </div>
+                        <div class="job-duration">January 2018 - July 2021 · 3 yrs 7 mos</div>
                     </div>
-                    <div class="job-duration">January 2018 - July 2021 · 3 yrs 7 mos</div>
-                </div>
-                <div class="job-description">
-                    <ul>
-                        <li>Contributed to the growth of a successful online auction platform</li>
-                        <li>Implemented features that enhanced user experience and streamlined internal workflows</li>
-                        <li>Leveraged Elasticsearch for efficient product search functionalities</li>
-                        <li>Worked effectively within a large, international engineering team</li>
-                    </ul>
+                    <div class="job-description">
+                        <ul>
+                            <li>Contributed to the growth of a successful online auction platform serving millions of users</li>
+                            <li>Implemented features that enhanced user experience and streamlined internal workflows</li>
+                            <li>Leveraged Elasticsearch for efficient product search and recommendations</li>
+                            <li>Worked effectively within a large, international engineering team using agile methodologies</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
             <div class="job-card">
-                <div class="job-header">
-                    <div>
-                        <div class="job-title">Software Engineer</div>
-                        <div class="company">VENTURE.co</div>
+                <img src="https://logo.clearbit.com/venture.co" alt="VENTURE.co" class="company-logo" onerror="this.style.display='none'">
+                <div class="job-content">
+                    <div class="job-header">
+                        <div>
+                            <div class="job-title">Software Engineer</div>
+                            <div class="company">VENTURE.co</div>
+                        </div>
+                        <div class="job-duration">May 2016 - January 2018 · 1 yr 9 mos</div>
                     </div>
-                    <div class="job-duration">May 2016 - January 2018 · 1 yr 9 mos</div>
-                </div>
-                <div class="job-description">
-                    <ul>
-                        <li>Built and maintained core functionalities for a venture capital platform</li>
-                        <li>Utilized Ruby on Rails to ensure a robust and scalable backend architecture</li>
-                        <li>Employed effective code review practices to maintain code quality</li>
-                    </ul>
+                    <div class="job-description">
+                        <ul>
+                            <li>Built and maintained core functionalities for a venture capital platform</li>
+                            <li>Utilized Ruby on Rails to ensure a robust and scalable backend architecture</li>
+                            <li>Employed effective code review practices to maintain high code quality standards</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
             <div class="job-card">
-                <div class="job-header">
-                    <div>
-                        <div class="job-title">Software Engineer</div>
-                        <div class="company">Payt</div>
+                <img src="https://logo.clearbit.com/payt.com" alt="Payt" class="company-logo" onerror="this.style.display='none'">
+                <div class="job-content">
+                    <div class="job-header">
+                        <div>
+                            <div class="job-title">Software Engineer</div>
+                            <div class="company">Payt</div>
+                        </div>
+                        <div class="job-duration">January 2015 - February 2016 · 1 yr 2 mos</div>
                     </div>
-                    <div class="job-duration">January 2015 - February 2016 · 1 yr 2 mos</div>
-                </div>
-                <div class="job-description">
-                    <ul>
-                        <li>Utilized React.js and Redux to build interactive and performant user interfaces</li>
-                    </ul>
+                    <div class="job-description">
+                        <ul>
+                            <li>Utilized React.js and Redux to build interactive and performant user interfaces</li>
+                            <li>Implemented state management solutions for complex financial workflows</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
             <div class="job-card">
-                <div class="job-header">
-                    <div>
-                        <div class="job-title">Ruby Developer</div>
-                        <div class="company">LoopMe</div>
+                <img src="https://logo.clearbit.com/loopme.hk" alt="LoopMe" class="company-logo" onerror="this.style.display='none'">
+                <div class="job-content">
+                    <div class="job-header">
+                        <div>
+                            <div class="job-title">Ruby Developer</div>
+                            <div class="company">LoopMe</div>
+                        </div>
+                        <div class="job-duration">June 2013 - January 2015 · 1 yr 8 mos</div>
                     </div>
-                    <div class="job-duration">June 2013 - January 2015 · 1 yr 8 mos</div>
-                </div>
-                <div class="job-description">
-                    <ul>
-                        <li>Played a key role in the growth of a startup that scaled from 5 to 50+ engineers</li>
-                        <li>Developed features for a social media marketing platform used by major brands</li>
-                        <li>Gained experience working in a fast-paced, high-growth environment</li>
-                    </ul>
+                    <div class="job-description">
+                        <ul>
+                            <li>Played a key role in the growth of a startup that scaled from 5 to 50+ engineers</li>
+                            <li>Developed features for a social media marketing platform used by major brands worldwide</li>
+                            <li>Gained extensive experience working in a fast-paced, high-growth environment</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>
 
         <footer>
-            <p>© 2026 Dmytro Budnyk</p>
+            <p>© 2026 Dmytro Budnyk · Building the future with LLMs & AI</p>
         </footer>
     </div>
+
+    <script>
+        function changeTheme(theme) {
+            if (theme === 'light') {
+                document.documentElement.removeAttribute('data-theme');
+            } else {
+                document.documentElement.setAttribute('data-theme', theme);
+            }
+            localStorage.setItem('theme', theme);
+        }
+
+        // Load saved theme on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.getElementById('theme-select').value = savedTheme;
+            changeTheme(savedTheme);
+        });
+    </script>
 </body>
 </html>
