@@ -9,8 +9,25 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Light Theme (Default) */
+        /* Ocean Theme (Default) */
         :root {
+            --primary: #f0f9ff;
+            --secondary: #e0f2fe;
+            --accent: #0ea5e9;
+            --accent-hover: #0284c7;
+            --text: #0c4a6e;
+            --text-muted: #0369a1;
+            --border: #bae6fd;
+            --card-bg: #ffffff;
+            --card-border: #bae6fd;
+            --gradient-1: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+            --gradient-2: linear-gradient(135deg, #06b6d4 0%, #0ea5e9 100%);
+            --bg-subtle: #e0f2fe;
+            --shadow: rgba(14, 165, 233, 0.15);
+        }
+
+        /* Light Theme */
+        [data-theme="light"] {
             --primary: #ffffff;
             --secondary: #f8fafc;
             --accent: #3b82f6;
@@ -60,23 +77,6 @@
             --shadow: rgba(120, 113, 108, 0.15);
         }
 
-        /* Ocean Theme */
-        [data-theme="ocean"] {
-            --primary: #f0f9ff;
-            --secondary: #e0f2fe;
-            --accent: #0ea5e9;
-            --accent-hover: #0284c7;
-            --text: #0c4a6e;
-            --text-muted: #0369a1;
-            --border: #bae6fd;
-            --card-bg: #ffffff;
-            --card-border: #bae6fd;
-            --gradient-1: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
-            --gradient-2: linear-gradient(135deg, #06b6d4 0%, #0ea5e9 100%);
-            --bg-subtle: #e0f2fe;
-            --shadow: rgba(14, 165, 233, 0.15);
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -100,8 +100,8 @@
             right: 0;
             bottom: 0;
             background:
-                radial-gradient(circle at 20% 50%, var(--accent-opacity, rgba(59, 130, 246, 0.05)) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, var(--accent2-opacity, rgba(139, 92, 246, 0.05)) 0%, transparent 50%);
+                radial-gradient(circle at 20% 50%, var(--accent-opacity, rgba(14, 165, 233, 0.05)) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, var(--accent2-opacity, rgba(99, 102, 241, 0.05)) 0%, transparent 50%);
             pointer-events: none;
             z-index: 0;
         }
@@ -150,7 +150,7 @@
         .theme-switcher select:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
         }
 
         .container {
@@ -443,6 +443,25 @@
             font-weight: bold;
         }
 
+        /* Current Job Badge */
+        .current-job {
+            position: relative;
+        }
+
+        .current-job::before {
+            content: 'CURRENT';
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: var(--gradient-1);
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.05em;
+        }
+
         /* Footer */
         footer {
             text-align: center;
@@ -492,10 +511,10 @@
     <div class="theme-switcher">
         <label for="theme-select">Color Theme</label>
         <select id="theme-select" onchange="changeTheme(this.value)">
+            <option value="ocean">🌊 Ocean</option>
             <option value="light">☀️ Light</option>
             <option value="dark">🌙 Dark</option>
             <option value="warm">🔥 Warm</option>
-            <option value="ocean">🌊 Ocean</option>
         </select>
     </div>
 
@@ -550,9 +569,10 @@
             <h2>Technical Skills</h2>
             <div class="skills-grid">
                 <span class="skill-tag llm">🤖 LLM Integration</span>
-                <span class="skill-tag llm">🧠 RAG Architectures</span>
                 <span class="skill-tag llm">⚡ LangChain</span>
+                <span class="skill-tag llm">🔮 Gemini API</span>
                 <span class="skill-tag llm">🔗 OpenAI API</span>
+                <span class="skill-tag llm">🛡️ Autosana</span>
                 <span class="skill-tag">Ruby</span>
                 <span class="skill-tag">Ruby on Rails</span>
                 <span class="skill-tag">Elasticsearch</span>
@@ -568,6 +588,27 @@
         <section class="experience">
             <h2>Experience</h2>
 
+            <div class="job-card current-job">
+                <img src="https://logo.clearbit.com/downapp.com" alt="Down" class="company-logo" onerror="this.style.display='none'">
+                <div class="job-content">
+                    <div class="job-header">
+                        <div>
+                            <div class="job-title">Software Developer & LLM Engineer</div>
+                            <div class="company">Down (downapp.com)</div>
+                        </div>
+                        <div class="job-duration">January 2024 - Present</div>
+                    </div>
+                    <div class="job-description">
+                        <ul>
+                            <li>Building highly available multi-step LLM review pipelines processing millions of requests</li>
+                            <li>Managing and optimizing LLM prompts for content moderation and safety systems</li>
+                            <li>Implementing automated LLM-driven QA for apps (Autosana)</li>
+                            <li>Developing scalable infrastructure for AI-powered features in a high-growth dating app</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
             <div class="job-card">
                 <img src="https://logo.clearbit.com/chattermill.com" alt="Chattermill" class="company-logo" onerror="this.style.display='none'">
                 <div class="job-content">
@@ -582,7 +623,7 @@
                         <ul>
                             <li>Built and maintained LLM-powered customer experience analytics platform</li>
                             <li>Integrated OpenAI GPT models for sentiment analysis and insight extraction</li>
-                            <li>Developed RAG (Retrieval-Augmented Generation) pipelines for knowledge management</li>
+                            <li>Developed knowledge management systems using vector databases and embeddings</li>
                             <li>Optimized backend processes using Ruby on Rails for improved scalability</li>
                             <li>Collaborated with product and design teams to translate user stories into production code</li>
                         </ul>
@@ -678,7 +719,7 @@
 
     <script>
         function changeTheme(theme) {
-            if (theme === 'light') {
+            if (theme === 'ocean') {
                 document.documentElement.removeAttribute('data-theme');
             } else {
                 document.documentElement.setAttribute('data-theme', theme);
@@ -688,7 +729,7 @@
 
         // Load saved theme on page load
         document.addEventListener('DOMContentLoaded', function() {
-            const savedTheme = localStorage.getItem('theme') || 'light';
+            const savedTheme = localStorage.getItem('theme') || 'ocean';
             document.getElementById('theme-select').value = savedTheme;
             changeTheme(savedTheme);
         });
